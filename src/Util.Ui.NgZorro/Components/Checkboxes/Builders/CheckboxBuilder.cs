@@ -1,0 +1,113 @@
+﻿using Util.Ui.Angular.Configs;
+using Util.Ui.NgZorro.Components.Base;
+using Util.Ui.NgZorro.Configs;
+using Util.Ui.NgZorro.Extensions;
+
+namespace Util.Ui.NgZorro.Components.Checkboxes.Builders; 
+
+/// <summary>
+/// 复选框标签生成器
+/// </summary>
+public class CheckboxBuilder : FormControlBuilderBase<CheckboxBuilder> {
+    /// <summary>
+    /// 配置
+    /// </summary>
+    private readonly Config _config;
+
+    /// <summary>
+    /// 初始化复选框标签生成器
+    /// </summary>
+    /// <param name="config">配置</param>
+    public CheckboxBuilder( Config config ) : base( config,"label" ) {
+        _config = config;
+        base.Attribute( "nz-checkbox" );
+    }
+
+    /// <summary>
+    /// 配置内部id
+    /// </summary>
+    public CheckboxBuilder NzId() {
+        AttributeIfNotEmpty( "nzId", _config.GetValue( UiConst.NzId ) );
+        AttributeIfNotEmpty( "[nzId]", _config.GetValue( AngularConst.BindNzId ) );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置自动获取焦点
+    /// </summary>
+    public CheckboxBuilder AutoFocus() {
+        AttributeIfNotEmpty( "[nzAutoFocus]", _config.GetValue( UiConst.AutoFocus ) );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置禁用
+    /// </summary>
+    public CheckboxBuilder Disabled() {
+        AttributeIfNotEmpty( "[nzDisabled]", _config.GetValue( UiConst.Disabled ) );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置中间状态
+    /// </summary>
+    public CheckboxBuilder Indeterminate() {
+        AttributeIfNotEmpty( "[nzIndeterminate]", _config.GetValue( UiConst.Indeterminate ) );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置选中状态
+    /// </summary>
+    public CheckboxBuilder Checked() {
+        AttributeIfNotEmpty( "[nzChecked]", _config.GetValue( UiConst.Checked ) );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置值
+    /// </summary>
+    public CheckboxBuilder Value() {
+        AttributeIfNotEmpty( "nzValue", _config.GetValue( UiConst.Value ) );
+        AttributeIfNotEmpty( "[nzValue]", _config.GetValue( AngularConst.BindValue ) );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置标签
+    /// </summary>
+    public CheckboxBuilder Label() {
+        var options = NgZorroOptionsService.GetOptions();
+        var text = _config.GetValue( UiConst.Label );
+        if ( text.IsEmpty() == false ) {
+            if ( options.EnableI18n ) {
+                this.AppendContentByI18n( text );
+                return this;
+            }
+            SetContent( _config.GetValue( UiConst.Label ) );
+            return this;
+        }
+        var bindLabel = _config.GetValue( AngularConst.BindLabel );
+        if( string.IsNullOrWhiteSpace( bindLabel ) )
+            return this;
+        SetContent( $"{{{{{bindLabel}}}}}" );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置事件
+    /// </summary>
+    public CheckboxBuilder Events() {
+        AttributeIfNotEmpty( "(nzCheckedChange)", _config.GetValue( UiConst.OnCheckedChange ) );
+        return this;
+    }
+
+    /// <summary>
+    /// 配置
+    /// </summary>
+    public override void Config() {
+        base.ConfigBase( _config );
+        ConfigForm().NzId().Name().AutoFocus().Disabled().Indeterminate().Checked()
+            .Value().Label().Events();
+    }
+}

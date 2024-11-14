@@ -1,0 +1,46 @@
+﻿using Util.Data.Sql.Builders.Params;
+
+namespace Util.Data.Sql.Builders.Conditions; 
+
+/// <summary>
+/// Representa una condición SQL que verifica si un valor es mayor que otro.
+/// </summary>
+/// <remarks>
+/// Esta clase hereda de <see cref="SqlConditionBase"/> y se utiliza para construir
+/// condiciones SQL que comparan valores utilizando el operador mayor que (>).
+/// </remarks>
+public class GreaterCondition : SqlConditionBase {
+    /// <summary>
+    /// Inicializa una nueva instancia de la clase <see cref="GreaterCondition"/>.
+    /// </summary>
+    /// <param name="parameterManager">El administrador de parámetros que se utilizará para gestionar los parámetros.</param>
+    /// <param name="column">El nombre de la columna que se evaluará en la condición.</param>
+    /// <param name="value">El valor que se comparará con el valor de la columna.</param>
+    /// <param name="isParameterization">Indica si se debe utilizar la parametrización en la consulta.</param>
+    public GreaterCondition( IParameterManager parameterManager, string column, object value, bool isParameterization )
+        : base( parameterManager, column, value, isParameterization ) {
+    }
+
+    /// <summary>
+    /// Agrega una condición a la cadena de consulta construida.
+    /// </summary>
+    /// <param name="builder">El objeto StringBuilder que contiene la consulta.</param>
+    /// <param name="column">El nombre de la columna a la que se le aplicará la condición.</param>
+    /// <param name="value">El valor que se comparará con la columna.</param>
+    protected override void AppendCondition(StringBuilder builder, string column, object value) {
+        builder.AppendFormat("{0}>{1}", column, value);
+    }
+
+    /// <summary>
+    /// Agrega una cláusula SQL al generador de SQL especificado.
+    /// </summary>
+    /// <param name="builder">El objeto StringBuilder que contiene la consulta SQL en construcción.</param>
+    /// <param name="column">El nombre de la columna a la que se aplicará la cláusula.</param>
+    /// <param name="sqlBuilder">El objeto ISqlBuilder que proporciona la lógica para construir la parte de la consulta SQL.</param>
+    protected override void AppendSqlBuilder(StringBuilder builder, string column, ISqlBuilder sqlBuilder) {
+        builder.AppendFormat("{0}>", column);
+        builder.Append("(");
+        sqlBuilder.AppendTo(builder);
+        builder.Append(")");
+    }
+}

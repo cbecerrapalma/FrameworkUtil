@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>$(NetTargetFramework)</TargetFramework>
+		<PackageIcon>icon.jpg</PackageIcon>
+		<AssemblyName>Util.Microservices.Dapr</AssemblyName>
+		<RootNamespace>Util.Microservices.Dapr</RootNamespace>
+		<Description></Description>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+		<OutputPath></OutputPath>
+		<DocumentationFile>.\obj\Debug\$(NetTargetFramework)\Util.Microservices.Dapr.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+		<OutputPath></OutputPath>
+		<DocumentationFile>.\obj\Release\$(NetTargetFramework)\Util.Microservices.Dapr.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\build\icon.jpg">
+			<Pack>True</Pack>
+			<Visible>False</Visible>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Dapr.AspNetCore" Version="1.13.1" />
+	  <PackageReference Include="Dapr.Extensions.Configuration" Version="1.13.1" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Util.Aop.AspectCore\03-Util.Aop.AspectCore.csproj" />
+	  <ProjectReference Include="..\Util.AspNetCore\08-Util.AspNetCore.csproj" />
+	  <ProjectReference Include="..\Util.Events\02-Util.Events.csproj" />
+	  <ProjectReference Include="..\Util.Microservices\01-Util.Microservices.csproj" />
+	</ItemGroup>
+</Project>

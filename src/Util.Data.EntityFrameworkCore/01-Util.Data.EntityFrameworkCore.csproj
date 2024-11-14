@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+	<PropertyGroup>
+		<TargetFramework>$(NetTargetFramework)</TargetFramework>
+		<PackageIcon>icon.jpg</PackageIcon>
+		<AssemblyName>Util.Data.EntityFrameworkCore</AssemblyName>
+		<RootNamespace>Util.Data.EntityFrameworkCore</RootNamespace>
+		<Description></Description>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <OutputPath></OutputPath>
+	  <DocumentationFile>.\obj\Debug\$(NetTargetFramework)\Util.Data.EntityFrameworkCore.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+	  <OutputPath></OutputPath>
+	  <DocumentationFile>.\obj\Release\$(NetTargetFramework)\Util.Data.EntityFrameworkCore.xml</DocumentationFile>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Include="..\..\build\icon.jpg">
+			<Pack>True</Pack>
+			<Visible>False</Visible>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
+
+	<ItemGroup>
+	  <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.6" />
+	  <PackageReference Include="Microsoft.EntityFrameworkCore.Relational" Version="8.0.6" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\Util.Data.Core\01-Util.Data.Core.csproj" />
+	  <ProjectReference Include="..\Util.Domain\01-Util.Domain.csproj" />
+	  <ProjectReference Include="..\Util.Tenants.Abstractions\01-Util.Tenants.Abstractions.csproj" />
+	</ItemGroup>
+
+</Project>
